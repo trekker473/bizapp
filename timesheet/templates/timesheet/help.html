@@ -1,0 +1,19 @@
+{% extends 'timesheet/base.html' %}
+
+{% block title %}
+  timesheet help
+{% endblock title %}
+
+{% block content %}
+  <h1>Timesheet Help</h1>
+  from template
+  <hr>
+  {% for note in notes %}
+    <br>
+    <h2>{{note.createdBy}}</h2>
+    <p>{{note.content}}
+      <br>
+      {{note.createdDateTime}}
+    </p>
+  {% endfor %}
+{% endblock content %}
