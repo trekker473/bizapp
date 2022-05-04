@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from users.models import Profile
+import uuid
 # Create your models here.
 
 class Org(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     orgName = models.CharField(max_length=50)
-    lastUpdated = models.DateTimeField()
     description = models.TextField()
     createdDateTime = models.DateTimeField()
 
@@ -13,11 +14,11 @@ class Org(models.Model):
         return entityName
 
 class Person(models.Model):
-    person = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
-    org = models.ForeignKey('Org', on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    person = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    org = models.ForeignKey(Org, on_delete=models.CASCADE)
     startDate = models.DateField()
     endDate = models.DateField()
-    lastUpdated = models.DateTimeField()
 
     def __str__(self):
         return f'(self.person.user.username)'
@@ -27,9 +28,8 @@ class PhoneNumber(models.Model):
     areaCode = models.IntegerField()
     phoneNumber = models.IntegerField()
     ext = models.IntegerField()
-    type = models.CharField(max_length=20)
-    ownerPerson = models.ManyToManyField(Person)
-    ownerOrg = models.ManyToManyField(Org)
+    description = models.CharField(max_length=40)
+    ownerUUID = models.CharField(max_length=32)#maybe many to many
 
 
 class Address(models.Model):
@@ -41,14 +41,28 @@ class Address(models.Model):
 
 
 class Email(models.Model):
-    ownerPerson = models.ManyToManyField(Person)
-    ownerOrg = models.ManyToManyField(Org)
+    ownerPerson = models.ForeignKey(Person, on_delete=models.CASCADE)
+    ownerOrg = models.ForeignKey(Org, on_delete=models.CASCADE)
     type = models.CharField(max_length=40)
     emailAddress = models.EmailField()
 
 
 class Note(models.Model):
+    objectID = models.CharField(max_length=32)
     createdDateTime = models.DateTimeField()
-    lastUpdated = models.DateTimeField()
     content = models.TextField()
     createdBy = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+class Employee(models.Model):
+    employee = models.ForeignKey(Person, on_delete=models.CASCADE)
+    employer = models.ForeignKey(Org, on_delete=models.CASCADE)
+    #client = models.ForeignKey(Org, on_delete=models.CASCADE)
+    payRate = models.IntegerField()
+    billRate = models.IntegerField()
+
+
+class Update(models.Model):
+    updateAuthor = models.ForeignKey(User, on_delete=models.CASCADE)
+    itemPrimaryKey = models.IntegerField()
+    updateDateTime = models.DateTimeField(auto_now_add=True)
+    updateDetails = models.TextField()
