@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('timesheet.urls')),
     path('timesheet/', include('timesheet.urls')),
     path('users/', include('users.urls')),
+    path('crm/', include('crm.urls')),
 ]
 
 if settings.DEBUG:

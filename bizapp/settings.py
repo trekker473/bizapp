@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'timesheet.apps.TimesheetConfig',
     'users.apps.UsersConfig',
+    'crm.apps.CrmConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
