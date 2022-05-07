@@ -26,3 +26,6 @@ def help(request):
         'notes': timeNote.objects.all()
     }
     return render(request,'timesheet/help.html', context)
+
+def timesheet(request):
+    return render(request, 'timesheet/timesheet.html')

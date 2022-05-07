@@ -13,6 +13,9 @@
       {% block title %}
       {% endblock title %}
     </title>
+    {% block extras %}
+    {% endblock extras %}
+
   </head>
   <body>
 <!---snippet------------------------------->
@@ -27,7 +30,7 @@
         <div class="navbar-nav mr-auto">
           <a class="nav-item nav-link" href="{% url 'timesheet-home' %}">Home</a>
           <a class="nav-item nav-link" href="{% url 'crm-home'%}#">CRM</a>
-          <a class="nav-item nav-link" herf="{% url 'timesheet-home'%}">Timesheet</a>
+          <a class="nav-item nav-link" herf="{% url 'timesheet'%}">Timesheet</a>
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
